@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (e.target.id === 'filter-active') {
                 applyFilter('active');
             } else if (e.target.id === 'filter-done') {
-                applyFilter('doneeeee');
+                applyFilter('done');
             }
         }
     });
