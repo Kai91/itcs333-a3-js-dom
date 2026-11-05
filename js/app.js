@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const counterEl = document.getElementById('counter');
     
     const updateCounter = () => {
-    const activeTasks = todoList.querySelectorAll('li:not(.completed)');
+    const activeTasks = Array.from(todoList.children).filter(li => !li.classList.contains('completed'));
     counterEl.textContent = `${activeTasks.length} items left`;
     };
 
