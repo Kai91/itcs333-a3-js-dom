@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const applyFilter = (filter) => {
         currentFilter = filter;
-        const allTasks = todoList.querySelectorAll('li');
+        const allTasks = todoList.children('li');
 
         allTasks.forEach((li) => {
             const isCompleted = li.classList.contains('completed');
