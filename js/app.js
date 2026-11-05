@@ -5,27 +5,47 @@
 
 // TODO: your code here
 document.addEventListener('DOMContentLoaded', () => {
-    const todoForm = document.getElementById('todo-form'); 
+    const todoForm = document.getElementById('todo-form');
     const todoInput = document.getElementById('todo-input');
     const errorMsg = document.getElementById('error-msg');
     const todoList = document.getElementById('todo-list');
     const counterEl = document.getElementById('counter');
     
+    let currentFilter = 'all';
+
     const updateCounter = () => {
-    const activeTasks = todoList.querySelectorAll('li:not(.completed)');
-    counterEl.textContent = `${activeTasks.length} items left`;
+        const activeTasks = todoList.querySelectorAll('li:not(.completed)');
+        counterEl.textContent = `${activeTasks.length} items left`;
+    };
+
+    const applyFilter = (filter) => {
+        currentFilter = filter;
+        const tasks = todoList.getElementsByTagName('li');
+
+        for (let li of tasks) {
+            const isCompleted = li.classList.contains('completed');
+
+            if (filter === 'all') {
+                li.style.display = 'flex';
+            } else if (filter === 'active') {
+                li.style.display = isCompleted ? 'none' : 'flex';
+            } else if (filter === 'done') {
+                li.style.display = isCompleted ? 'flex' : 'none';
+            }
+        }
     };
 
     todoForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const text = todoInput.value.trim();
-        if ( text === '' ){
+        
+        if (text === '') {
             errorMsg.classList.remove('hidden');
-        return;
-        }
-        else {
+            return;
+        } else {
             errorMsg.classList.add('hidden');
         }
+
         const li = document.createElement('li');
 
         const span = document.createElement('span');
@@ -40,10 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(deleteBtn);
         
         todoList.appendChild(li);
-
-        todoInput.value= '';
+        
+        todoInput.value = '';
         updateCounter();
-
         applyFilter(currentFilter);
     });
 
@@ -51,37 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.classList.contains('item-text')) {
             e.target.parentElement.classList.toggle('completed');            
             updateCounter();
+            applyFilter(currentFilter);
         }
         if (e.target.classList.contains('delete-btn')) {
             e.target.parentElement.remove();
             updateCounter();
+            applyFilter(currentFilter);
         }
-
-        applyFilter(currentFilter);
     });
 
-    let currentFilter = 'all';
-
-    const applyFilter = (filter) => {
-        currentFilter = filter;
-        const allTasks = todoList.children('li');
-
-        allTasks.forEach((li) => {
-            const isCompleted = li.classList.contains('completed');
-
-            if (filter === 'all') {
-                li.style.display = 'flex';
-                }
-                else if (filter === 'active') {
-                li.style.display = isCompleted ? 'none' : 'flex';
-                } 
-                else if (filter === 'done') {
-                li.style.display = isCompleted ? 'flex' : 'none';
-                }
-        });
-    };
-
-        const filterContainer = document.querySelector('.filters');
+    const filterContainer = document.querySelector('.filters');
 
     filterContainer.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
