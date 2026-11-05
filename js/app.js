@@ -80,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
         });
     };
-    const filterContainer = document.querySelector('.filters');
+
+        const filterContainer = document.querySelector('.filters');
 
     filterContainer.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
@@ -89,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (e.target.id === 'filter-active') {
                 applyFilter('active');
             } else if (e.target.id === 'filter-done') {
-                applyFilter('done');
+                applyFilter('doneeeee');
             }
         }
     });
